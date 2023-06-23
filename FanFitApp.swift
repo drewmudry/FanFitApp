@@ -13,7 +13,7 @@ struct FanFitApp: App {
     init() {
         FirebaseApp.configure()
     }
-    
+    //test line for github
     var body: some Scene {
         WindowGroup {
             ContentView().environmentObject(AuthViewModel.shared)
