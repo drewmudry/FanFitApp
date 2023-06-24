@@ -15,7 +15,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if viewModel.userSession == nil {
-                LoginView()
+                LandingView()
             } else {
                 if let user = viewModel.currentUser {
                     MainTabView(user: user, selectedIndex: $selectedIndex)

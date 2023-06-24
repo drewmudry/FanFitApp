@@ -20,10 +20,20 @@ struct RegistrationView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: Gradient(colors: [Color(hex: 0x363534), Color.black]), startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
             
             VStack {
+                Text("Let's sign you in")
+                    .foregroundLinearGradient(
+                        colors: [.orange, .pink],
+                        startPoint: .leading,
+                        endPoint: .trailing)
+                    .font(.largeTitle.bold())
+                    .hAlign(.leading)
+                    .padding(.horizontal, 32)
+                    .padding(.top, 32)
+                    .underline()
                 ZStack {
                     if let image = image {
                         image
@@ -74,7 +84,7 @@ struct RegistrationView: View {
                         .foregroundColor(.white)
                         .padding(.horizontal, 32)
                 }
-                
+                /*
                 Button(action: {
                     viewModel.register(withEmail: email, password: password,
                                        image: selectedImage, fullname: fullname,
@@ -87,7 +97,20 @@ struct RegistrationView: View {
                         .background(Color(#colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)))
                         .clipShape(Capsule())
                         .padding()
-                })
+                })*/
+                
+                Button(action: {
+                    viewModel.register(withEmail: email, password: password,
+                                       image: selectedImage, fullname: fullname,
+                                       username: username)
+                }) {
+                    Text("SIGN UP")
+                        .bold()
+                        .frame(width: UIScreen.screenWidth-64 , height: 50, alignment: .center)
+                }
+                .background(.linearGradient(colors: [.orange, .orange, .pink], startPoint: .leading, endPoint: .trailing))
+                 .foregroundColor(Color.white)
+                 .cornerRadius(10)
                 
                 Spacer()
                 
@@ -95,10 +118,12 @@ struct RegistrationView: View {
                     HStack {
                         Text("Already have an account?")
                             .font(.system(size: 14))
+                            .foregroundColor(.white)
                         
                         Text("Sign In")
                             .font(.system(size: 14, weight: .semibold))
-                    }.foregroundColor(.white)
+                            .foregroundColor(.pink)
+                    }
                 })
             }
         }
