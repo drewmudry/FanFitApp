@@ -14,6 +14,7 @@ struct Post: Identifiable, Decodable {
     let ownerUid: String
     let ownerUsername: String
     let caption: String
+    //might not need isPremium
     var isPremium : Bool
     var isPaid: Bool
     var likes: Int
