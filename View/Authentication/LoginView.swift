@@ -60,20 +60,7 @@ struct LoginView: View {
                                     .padding(.trailing, 28)
                             })
                     }
-                    /*
-                    Button(action: {
-                        viewModel.login(withEmail: email, password: password)
-                    }, label: {
-                        Text("Sign In")
-                            .font(.headline)
-                            .foregroundColor(.purple)
-                            .frame(width: 360, height: 50)
-                            .background(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
-                            .clipShape(Capsule())
-                            .padding()
-                        
-                    })
-                    */
+
                     Button(action: {
                         viewModel.login(withEmail: email, password: password)
                     }) {
