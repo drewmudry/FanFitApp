@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct ResetPasswordView: View {
+    @State var didSubmit: Bool = false
     @EnvironmentObject var viewModel: AuthViewModel
     @Environment(\.presentationMode) var mode
     @Binding private var email: String
+    //@Binding private var submitted : Bool
     
     init(email: Binding<String>) {
         self._email = email
@@ -18,15 +20,19 @@ struct ResetPasswordView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: Gradient(colors: [Color(hex: 0x363534), Color.black]), startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
-            
+            Spacer()
             VStack {
-                Image("instagram_logo_white")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 220, height: 100)
-                    .foregroundColor(.white)
+                Text("Let's sign you in")
+                    .foregroundLinearGradient(
+                        colors: [.orange, .pink],
+                        startPoint: .leading,
+                        endPoint: .trailing)
+                    .font(.largeTitle.bold())
+                    .hAlign(.leading)
+                    .padding(.horizontal, 32)
+                    .underline()
                                     
                 VStack(spacing: 20) {
                     CustomTextField(text: $email, placeholder: Text("Email"), imageName: "envelope")
@@ -36,19 +42,20 @@ struct ResetPasswordView: View {
                         .foregroundColor(.white)
                         .padding(.horizontal, 32)
                 }
-                                    
+                
+                
                 Button(action: {
                     viewModel.resetPassword(withEmail: email)
-                    
-                }, label: {
-                    Text("Send Reset Password Link")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(width: 360, height: 50)
-                        .background(Color(#colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)))
-                        .clipShape(Capsule())
-                        .padding()
                 })
+                {
+                    Text("Send Reset Password Link")
+                        .bold()
+                        .frame(width: UIScreen.screenWidth-64 , height: 50, alignment: .center)
+                }
+                .background(.linearGradient(colors: [.orange, .orange, .pink], startPoint: .leading, endPoint: .trailing))
+                 .foregroundColor(Color.white)
+                 .cornerRadius(10)
+                
                 
                 Spacer()
                 
@@ -65,7 +72,8 @@ struct ResetPasswordView: View {
             .padding(.top, -44)
         }
         .onReceive(viewModel.$didSendResetPasswordLink, perform: { _ in
-            self.mode.wrappedValue.dismiss()
+            //self.mode.wrappedValue.dismiss()
         })
+    
     }
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
+    @State var showResetPassword : Bool = false
     @State private var email = ""
     @State private var password = ""
     @EnvironmentObject var viewModel: AuthViewModel
@@ -50,15 +51,26 @@ struct LoginView: View {
                     HStack {
                         Spacer()
                         
+                        Button {
+                            showResetPassword.toggle()
+                        } label: {
+                            Text("Forgot Password?")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundColor(.orange)
+                                .padding(.top)
+                                .padding(.trailing, 28)
+                        }
+                        /*
                         NavigationLink(
-                            destination: ResetPasswordView(email: $email),
+                            //destination: ResetPasswordView(email: $email)
+                            showResetPassword.toggle(),
                             label: {
                                 Text("Forgot Password?")
                                     .font(.system(size: 13, weight: .semibold))
                                     .foregroundColor(.orange)
                                     .padding(.top)
                                     .padding(.trailing, 28)
-                            })
+                            })*/
                     }
 
                     Button(action: {
@@ -89,6 +101,10 @@ struct LoginView: View {
                         }).padding(.bottom, 16)
                 }
                 .padding(.top, -44)
+            }
+            // MARK: Register View VIA Sheets
+            .fullScreenCover(isPresented: $showResetPassword) {
+                ResetPasswordView(email: $email)
             }
         }
     }
