@@ -31,6 +31,7 @@ struct MainTabView: View {
                     }.tag(1)
                 
                 UploadPostView(tabIndex: $selectedIndex)
+                //UploadPostView()
                     .onTapGesture {
                         selectedIndex = 2
                     }
@@ -62,6 +63,30 @@ struct MainTabView: View {
             )
             .accentColor(.black)
         }
+        
+        /*
+        ZStack {
+            
+            NavigationView {
+            viewList[selectedIndex]
+            }
+            
+            VStack {
+                Spacer()
+                ZStack {
+                    BottomBar(selectedIndex: $selectedIndex, items: $items)
+                        .cornerRadius(20)
+                        .shadow(color: Color.darkTextColorMain.opacity(0.1), radius: 10,
+                                x: 10,
+                                y: 5)
+                }.padding(EdgeInsets(top: 0,
+                                     leading: 40,
+                                     bottom: -10,
+                                     trailing: 40))
+                
+            }
+        }
+        */
     }
     
     var logoutButton: some View {
@@ -95,3 +120,4 @@ struct MainTabView: View {
         }
     }
 }
+

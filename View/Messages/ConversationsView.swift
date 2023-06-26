@@ -19,8 +19,8 @@ struct ConversationsView: View {
             
             if let user = user {
                 NavigationLink(destination: LazyView(ChatView(user: user)),
-                               isActive: $showChat,
-                               label: {} )
+                    // isActive: $showChat,
+                    label: {} )
             }
             
             ScrollView {

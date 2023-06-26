@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ResetPasswordView: View {
-    @State var didSubmit: Bool = false
+    @State private var presentAlert = false
     @EnvironmentObject var viewModel: AuthViewModel
     @Environment(\.presentationMode) var mode
     @Binding private var email: String
-    //@Binding private var submitted : Bool
+
     
     init(email: Binding<String>) {
         self._email = email
@@ -24,7 +24,8 @@ struct ResetPasswordView: View {
                 .ignoresSafeArea()
             Spacer()
             VStack {
-                Text("Let's sign you in")
+                Spacer().frame(height: 100)
+                Text("Let's get you a new password")
                     .foregroundLinearGradient(
                         colors: [.orange, .pink],
                         startPoint: .leading,
@@ -46,6 +47,8 @@ struct ResetPasswordView: View {
                 
                 Button(action: {
                     viewModel.resetPassword(withEmail: email)
+                    presentAlert.toggle()
+                    
                 })
                 {
                     Text("Send Reset Password Link")
@@ -71,9 +74,7 @@ struct ResetPasswordView: View {
             }
             .padding(.top, -44)
         }
-        .onReceive(viewModel.$didSendResetPasswordLink, perform: { _ in
-            //self.mode.wrappedValue.dismiss()
-        })
-    
+        .alert("A Link has been sent to your email to reset your password.", isPresented: $presentAlert,
+               actions: {}) // 4
     }
 }
