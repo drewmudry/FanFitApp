@@ -14,18 +14,22 @@ struct ProfileActionButtonView: View {
     
     var body: some View {
         if viewModel.user.isCurrentUser {
-            Button(action: { showEditProfile.toggle() }, label: {
-                Text("Edit Profile")
-                    .font(.system(size: 14, weight: .semibold))
-                    .frame(width: 360, height: 32)
-                    .foregroundColor(.black)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 3)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-            }).sheet(isPresented: $showEditProfile) {
-                EditProfileView(user: $viewModel.user)
+            HStack{
+                Button(action: { showEditProfile.toggle() }, label: {
+                    Text("Edit Profile")
+                        .font(.system(size: 14, weight: .semibold))
+                        .frame(width: 300, height: 32)
+                        .foregroundColor(.black)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 3)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                }).sheet(isPresented: $showEditProfile) {
+                    EditProfileView(user: $viewModel.user)
+                }
+                logoutButton
             }
+            
             
         } else {
             HStack {
@@ -52,6 +56,19 @@ struct ProfileActionButtonView: View {
                         )
                 }
             }
+        }
+    }
+    var logoutButton: some View {
+        Button {
+            AuthViewModel.shared.signout()
+        } label: {
+            Text("Logout")
+                .foregroundColor(.black)
+                .frame(width: 60, height: 32)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 3)
+                        .stroke(Color.gray, lineWidth: 1)
+                )
         }
     }
 }
