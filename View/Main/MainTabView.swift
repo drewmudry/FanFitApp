@@ -12,81 +12,79 @@ struct MainTabView: View {
     @Binding var selectedIndex: Int
     
     var body: some View {
-        NavigationView {
-            TabView(selection: $selectedIndex) {
-                FeedView()
-                    .onTapGesture {
-                        selectedIndex = 0
+        ZStack{
+            LinearGradient(gradient: Gradient(colors: [Color(hex: 0x363534), Color(hex: 0x282b30)]), startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea()
+            NavigationView {
+                TabView(selection: $selectedIndex) {
+                    FeedView()
+                        .onTapGesture {
+                            selectedIndex = 0
+                        }
+                        .tabItem {
+                            Image(systemName: "house")
+                        }.tag(0)
+                        .navigationTitle("hello")
+                    
+                    SearchView()
+                        .onTapGesture {
+                            selectedIndex = 1
+                        }
+                        .tabItem {
+                            Image(systemName: "magnifyingglass")
+                        }.tag(1)
+                    
+                    
+                    
+                    NotificationsView()
+                        .onTapGesture {
+                            selectedIndex = 2
+                        }
+                        .tabItem {
+                            Image(systemName: "heart")
+                        }.tag(2)
+                    
+                    ProfileView(user: user)
+                        .onTapGesture {
+                            selectedIndex = 3
+                        }
+                        .tabItem {
+                            Image(systemName: "person")
+                        }.tag(3)
+                }
+                .navigationTitle(selectedIndex == 0 ? "" : tabTitle)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarItems(
+                    leading:
+                        HStack{
+                            selectedIndex == 0 ? uploadPostButton : nil
+                            selectedIndex == 0 ? fanfitlogo : nil
+                        },
+                    trailing: selectedIndex == 0 ? messageLink : nil
+                  )
+                  
+                /*
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        uploadPostButton
                     }
-                    .tabItem {
-                        Image(systemName: "house")
-                    }.tag(0)
-                
-                SearchView()
-                    .onTapGesture {
-                        selectedIndex = 1
+                    ToolbarItem(placement: .principal) {
+                        Text("FanFit")
+                            .font(.custom("Ubuntu-Title", size: 30))
+                            .bold()
+                            .foregroundStyle(.linearGradient(colors: [ .orange, .pink, ], startPoint: .leading, endPoint: .trailing))
+
                     }
-                    .tabItem {
-                        Image(systemName: "magnifyingglass")
-                    }.tag(1)
-                
-                UploadPostView(tabIndex: $selectedIndex)
-                //UploadPostView()
-                    .onTapGesture {
-                        selectedIndex = 2
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        messageLink
                     }
-                    .tabItem {
-                        Image(systemName: "plus.square")
-                    }.tag(2)
-                
-                NotificationsView()
-                    .onTapGesture {
-                        selectedIndex = 3
-                    }
-                    .tabItem {
-                        Image(systemName: "heart")
-                    }.tag(3)
-                
-                ProfileView(user: user)
-                    .onTapGesture {
-                        selectedIndex = 4
-                    }
-                    .tabItem {
-                        Image(systemName: "person")
-                    }.tag(4)
+                    
+                }
+                */
+                .accentColor(.black)
             }
-            .navigationTitle(tabTitle)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                leading: selectedIndex == 0 ? logoutButton : nil,
-                trailing: selectedIndex == 0 ? messageLink : nil
-            )
-            .accentColor(.black)
         }
         
-        /*
-        ZStack {
-            
-            NavigationView {
-            viewList[selectedIndex]
-            }
-            
-            VStack {
-                Spacer()
-                ZStack {
-                    BottomBar(selectedIndex: $selectedIndex, items: $items)
-                        .cornerRadius(20)
-                        .shadow(color: Color.darkTextColorMain.opacity(0.1), radius: 10,
-                                x: 10,
-                                y: 5)
-                }.padding(EdgeInsets(top: 0,
-                                     leading: 40,
-                                     bottom: -10,
-                                     trailing: 40))
-                
-            }
-        }
-        */
     }
     
     var logoutButton: some View {
@@ -95,6 +93,25 @@ struct MainTabView: View {
         } label: {
             Text("Logout").foregroundColor(.black)
         }
+    }
+    
+    var fanfitlogo: some View{
+        Text("FanFit")
+            .font(.custom("Ubuntu-Title", size: 30))
+            .bold()
+            .foregroundStyle(.linearGradient(colors: [ .orange, .pink, ], startPoint: .leading, endPoint: .trailing))
+    }
+    
+    var uploadPostButton: some View{
+        NavigationLink(
+            destination: UploadView(),
+            label: {
+                Image(systemName: "plus.square")
+                    .resizable()
+                    .font(.system(size: 20, weight: .light))
+                    .scaledToFit()
+                    .foregroundColor(.black)
+            })
     }
     
     var messageLink: some View {
@@ -113,9 +130,8 @@ struct MainTabView: View {
         switch selectedIndex {
         case 0: return "Feed"
         case 1: return "Explore"
-        case 2: return "New Post"
-        case 3: return "Notifications"
-        case 4: return "Profile"
+        case 2: return "Notifications"
+        case 3: return "Profile"
         default: return ""
         }
     }

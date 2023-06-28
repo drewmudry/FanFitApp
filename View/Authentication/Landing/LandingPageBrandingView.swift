@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct LandingPageBrandingView: View {
     var body: some View {
         VStack{
