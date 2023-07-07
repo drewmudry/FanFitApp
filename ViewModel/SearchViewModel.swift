@@ -12,6 +12,7 @@ enum SearchViewModelConfig {
     case followers(String)
     case following(String)
     case likes(String)
+    case poster(String)
     case search
     case newMessage
 }
@@ -41,6 +42,8 @@ class SearchViewModel: ObservableObject {
             fetchFollowingUsers(forUid: uid)
         case .likes(let postId):
             fetchPostLikesUsers(forPostId: postId)
+        case .poster(let postId):
+            fetchPosterUsers(forPostId: postId)
         case .search, .newMessage:
             fetchUsers()
         }
@@ -48,6 +51,12 @@ class SearchViewModel: ObservableObject {
     
     private func fetchPostLikesUsers(forPostId postId: String) {
         COLLECTION_POSTS.document(postId).collection("post-likes").getDocuments { snapshot, _ in
+            self.fetchUsers(snapshot)
+        }
+    }
+    
+    private func fetchPosterUsers(forPostId postId: String) {
+        COLLECTION_POSTS.document(postId).collection("ownerUid").getDocuments { snapshot, _ in
             self.fetchUsers(snapshot)
         }
     }

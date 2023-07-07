@@ -1,8 +1,8 @@
 //
 //  FeedCellViewModel.swift
-//  InstagramSwiftUITutorial
+//  FanFitapp
 //
-//  Created by Stephen Dowless on 12/31/20.
+//  Created by Drew Mudry on 06/31/23.
 //
 
 import SwiftUI
@@ -26,6 +26,12 @@ class FeedCellViewModel: ObservableObject {
     init(post: Post) {
         self.post = post
         checkIfUserLikedPost()
+    }
+    
+    func getProfileFromPost(){
+        guard let postId = post.id else { return }
+       // let owner = COLLECTION_USERS.document(postId).collection("ownerUid").getDocuments
+        return
     }
     
     func like() {

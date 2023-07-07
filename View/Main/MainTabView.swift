@@ -13,8 +13,6 @@ struct MainTabView: View {
     
     var body: some View {
         ZStack{
-            LinearGradient(gradient: Gradient(colors: [Color(hex: 0x363534), Color(hex: 0x282b30)]), startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea()
             NavigationView {
                 TabView(selection: $selectedIndex) {
                     FeedView()
@@ -33,8 +31,6 @@ struct MainTabView: View {
                         .tabItem {
                             Image(systemName: "magnifyingglass")
                         }.tag(1)
-                    
-                    
                     
                     NotificationsView()
                         .onTapGesture {
@@ -87,19 +83,13 @@ struct MainTabView: View {
         
     }
     
-    var logoutButton: some View {
-        Button {
-            AuthViewModel.shared.signout()
-        } label: {
-            Text("Logout").foregroundColor(.black)
-        }
-    }
     
     var fanfitlogo: some View{
         Text("FanFit")
             .font(.custom("Ubuntu-Title", size: 30))
             .bold()
             .foregroundStyle(.linearGradient(colors: [ .orange, .pink, ], startPoint: .leading, endPoint: .trailing))
+        
     }
     
     var uploadPostButton: some View{
